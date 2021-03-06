@@ -10,7 +10,7 @@ networks:
 services:
 
   kong:
-    image: "${KONG_DOCKER_TAG:-kong:latest}"
+    image: "${KONG_DOCKER_TAG:-kong:2.3.3}"
     user: "${KONG_USER:-kong}"
     environment:
       KONG_DECLARATIVE_CONFIG: /opt/conf/kong.yml

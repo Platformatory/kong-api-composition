@@ -21,9 +21,7 @@ dependencies = {
 build = {
   type = "builtin",
   modules = {
-    ["kong.plugins.kong-api-composition.access"] = "src/access.lua",
     ["kong.plugins.kong-api-composition.handler"] = "src/handler.lua",
-    ["kong.plugins.kong-api-composition.header_filter"] = "src/header_filter.lua",
     ["kong.plugins.kong-api-composition.schema"] = "src/schema.lua",
   }
 }

@@ -2,17 +2,18 @@ local BasePlugin = require "kong.plugins.base_plugin"
 
 local ApiComposition = BasePlugin:extend()
 
-function APIComposition:new()
-    APIComposition.super.new(self, "kong-api-composition")
+function ApiComposition:new()
+    ApiComposition.super.new(self, "kong-api-composition")
 end
 
-function APIComposition:access(config)
-    APIComposition.super.access(self)
+function ApiComposition:access(config)
+    ApiComposition.super.access(self)
     for key,value in pairs(config) do
       print("found member " .. key);
     end
 
+    return kong.response.exit(200, { message= "Yo", aggr= config.aggregateResp})
 end
 
 
-return APIComposition
+return ApiComposition
