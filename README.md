@@ -23,11 +23,14 @@ headers: Array of headers as strings in the format "key: value"
 
 For diagnostic tests, run ./run_tests.sh. With flattened: True,
 
+```
 {
   "body": "{\n  \"args\": {}, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Content-Length\": \"0\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"lua-resty-http/0.14 (Lua) ngx_lua/10017\", \n    \"X-Amzn-Trace-Id\": \"Root=1-60460580-5e142dd043972bc36fd4d6df\"\n  }, \n  \"json\": null, \n  \"method\": \"GET\", \n  \"origin\": \"35.184.82.42\", \n  \"url\": \"http://httpbin.org/anything\"\n}\n{\n  \"origin\": \"35.184.82.42\"\n}\n{\n  \"user-agent\": \"lua-resty-http/0.14 (Lua) ngx_lua/10017\"\n}\n"
 }
+```
 
 With flattened: False,
+```
 [
   {
     "headers": {
@@ -71,9 +74,10 @@ With flattened: False,
     "status": 200
   }
 ]
+```
 
 
-4. Set HTTP client options (TODO: Under progress
+4. Set HTTP client options (TODO: Under progress)
 
 
 # Known issues, Suggested Improvements & TODOs
