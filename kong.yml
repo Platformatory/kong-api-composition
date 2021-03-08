@@ -15,7 +15,7 @@ services:
 #        body:
 #        method: GET
       destinations: '[{"uri":"http:\/\/httpbin.org\/anything","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""},{"uri":"http:\/\/httpbin.org\/ip","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""},{"uri":"http:\/\/httpbin.org\/user-agent","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""}]'
-      aggregateResp: False
+      flattened: True
   routes:
   - name: route-42
     paths:

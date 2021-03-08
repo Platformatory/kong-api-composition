@@ -17,37 +17,43 @@ function ApiComposition:access(config)
   
 --  Collect all responses into this table by default
     local responses = {}
+    if config.flattened then
+      responses.body = ""
+    end
 
 -- Loop through the req targets and run HTTP requests
--- TODO: Fix this.. This has some weird issues. Resty HTTP has some coroutiney code which probably yields outside the loop or breaks the loop in some way. It seems to be running only once. The loop in subsequent runs errors out by complaining "reqs" is a string and not a table
    
+    local client = http:new()
     for k, v in pairs(reqs) do
-      print ("inside the loop")
-      local client = http:new()
-      print(inspect(client))      
-      local res, err = pcall(client:request_uri(v.uri, {method = v.method, headers = v.headers, body = v.body}))
-      print(inspect(res))  
+      -- TODO: headers need to be a table
+      -- local settings = {method = v.method, headers = v.headers, body = v.body}
+      local settings = {method = v.method, body = v.body}
+      print(inspect(v.headers))      
+      local res, err = client:request_uri(v.uri, settings)
 
-      if err then
-      end
-
-      if not res then
-      end
-
-      if res.status == 200 then
-      end
-
-    end      
+      if config.flattened then
+        if not res then
+          responses.body = responses.body .. "error:" .. err
+        else
+          responses.body = responses.body .. res.body
+        end
+      else
+        local result = { uri = v.uri}
+        if not res then
+          result.err = err
+          responses[k] = result
+        else
+          result.status = res.status
+          result.headers = res.headers
+          result.body = res.body
+          responses[k] = result
+        end
+      end     -- if flattened 
+    end       -- for loop
   
-    print(inspect(reqs))
 
-   if config.aggregateResp then
---  Merge all the headers & bodies 
-   end
-
-
--- JSON encode and send the response
-    return kong.response.exit(200, { message= "Yo", aggr= config.aggregateResp})
+   -- JSON encode and send the response
+   return kong.response.exit(200, responses)
 end
 
 

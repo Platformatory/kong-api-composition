@@ -26,7 +26,7 @@ return {
       config = {
         type = "record",
         fields = {
-          { aggregateResp = { type = "boolean", required = false, default = false }},
+          { flattened = { type = "boolean", required = false, default = false }},
           { destinations = { type = "string", required = false, default = "{}"}},
         }
       }
