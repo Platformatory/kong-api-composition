@@ -27,7 +27,16 @@ return {
         type = "record",
         fields = {
           { flattened = { type = "boolean", required = false, default = false }},
-          { destinations = { type = "string", required = false, default = "{}"}},
+          { destinations = { type = "array", required = true, default = {}, elements={
+              type = "record",
+              fields = {
+                { uri = { type = "string", required = true}},
+                { method = { type = "string", required = true}},
+                { headers = { type = "array", required = false, default = {}, elements= {
+                   type = "string",
+                }}},
+            }
+          }}, },
         }
       }
     }

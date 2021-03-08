@@ -13,7 +13,7 @@ function ApiComposition:access(config)
     ApiComposition.super.access(self) 
 
 --  destinations from the plugin conf json string
-    local reqs = json.decode(config.destinations)
+    local reqs = config.destinations
   
 --  Collect all responses into this table by default
     local responses = {}
@@ -25,10 +25,7 @@ function ApiComposition:access(config)
    
     local client = http:new()
     for k, v in pairs(reqs) do
-      -- TODO: headers need to be a table
-      -- local settings = {method = v.method, headers = v.headers, body = v.body}
-      local settings = {method = v.method, body = v.body}
-      print(inspect(v.headers))      
+      local settings = {method = v.method, headers = v.headers, body = v.body}
       local res, err = client:request_uri(v.uri, settings)
 
       if config.flattened then

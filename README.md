@@ -1,6 +1,6 @@
 # Overview
 
-This plugin takes a stringified JSON array of HTTP request objects and provides a composite response containing a collection of individual responses. It can optionally flatten ("aggregate") response bodies to a single concatenated body with an chosen separator.
+This plugin takes an array of HTTP request descriptions and provides a composite response containing a collection of individual responses. It can optionally flatten ("aggregate") response bodies to a single concatenated body with an chosen separator.
 
 # Use-cases
 
@@ -13,14 +13,13 @@ The URIs are digested into the Kong lifecycle handler with composition performed
 # Usage
 
 1. Configure a service and a route for the plugin: See declarative config in kong.yml (/route/42)
-2. Destinations accepts an array of JSON objects in the following format
+2. An array of Destinations is accepted in the following format
 
-[{
-"uri": <some uri>,
-"method": <any HTTP method>
-"headers": <k/v literals of HTTP headers. Configure Accept: Application/JSON for best results>,
-"body":  <request body>
-}]
+```
+uri: <some uri>
+method: <any HTTP verb>
+headers: Array of headers as strings in the format "key: value"
+```
 
 For diagnostic tests, run ./run_tests.sh. With flattened: True,
 
@@ -79,16 +78,12 @@ With flattened: False,
 
 # Known issues, Suggested Improvements & TODOs
 
-1. Configuration schema: Accept a YAML array of objects/sequences and validate it for sanity. Presently, this plugin consumes a JSON string (which can get unwieldy)
-  a. JSON needs better validation
-  b. May behave in unpredictable ways with quoted strings
+1. Named option configurations for the HTTP client - such as keepalives, timeouts, SSL/TLS settings etc. This plugin uses Resty.HTTP. We can improve the options object to consume a named list of configuration flags that can be passed on to resty under the hood.
 
-2. Named option configurations for the HTTP client - such as keepalives, timeouts, SSL/TLS settings etc. This plugin uses Resty.HTTP. We can improve the options object to consume a named list of configuration flags that can be passed on to resty under the hood.
+2. HTTP requests can be pipelined on an existing connection if sources are on the same host. See Resty request_pipeline. We can also explore potentially light threads (ngx.thread.spawn)
 
-3. HTTP requests can be pipelined on an existing connection if sources are on the same host. See Resty request_pipeline. We can also explore potentially light threads (ngx.thread.spawn)
-
-4. Aggregation is presently not "Accept" aware (both on the proxy side and the upstream source side): It naively sends JSON encoded responses.
+3. Aggregation is presently not "Accept" aware (both on the proxy side and the upstream source side): It naively sends JSON encoded responses.
   a. Need to flush out caveats around aggregation. Presently it is based on string concat with a configurable separator. For clarity, we refer to this as the flatten flag
 
-5. Pongo tests and Lurarocks distribution (TBD)
+4. Pongo tests and Lurarocks distribution (TBD)
 

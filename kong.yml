@@ -6,7 +6,19 @@ services:
   plugins:
   - name: kong-api-composition
     config:
-      destinations: '[{"uri":"http:\/\/httpbin.org\/anything","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""},{"uri":"http:\/\/httpbin.org\/ip","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""},{"uri":"http:\/\/httpbin.org\/user-agent","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""}]'
+      destinations:
+        -
+          uri: "http://httpbin.org/headers"
+          method: "GET"
+          headers:
+            - "Accept: application/json"
+            - "Movie: King Kong"
+        -
+          uri: "http://httpbin.org/ip"
+          method: "GET"
+        -
+          uri: "http://httpbin.org/user-agent"
+          method: "GET"
       flattened: False
   routes:
   - name: route-42
