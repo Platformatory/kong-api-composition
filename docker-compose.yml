@@ -28,13 +28,6 @@ services:
       - "127.0.0.1:8001:8001/tcp"
       - "8443:8443/tcp"
       - "127.0.0.1:8444:8444/tcp"
-    healthcheck:
-      test: ["CMD", "kong", "health"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
-    restart: on-failure
-
     volumes:
       - .:/opt/conf/
     command: sh /opt/conf/build.sh

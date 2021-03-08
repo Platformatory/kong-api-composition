@@ -6,6 +6,15 @@ services:
   plugins:
   - name: kong-api-composition
     config:
+#        - uri: http://httpbin.org/ip
+#        headers: 
+#        body: 
+#        method: GET
+#        - uri: http://httpbin.org/anything
+#        headers:
+#        body:
+#        method: GET
+      destinations: '[{"uri":"http:\/\/httpbin.org\/anything","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""},{"uri":"http:\/\/httpbin.org\/ip","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""},{"uri":"http:\/\/httpbin.org\/user-agent","method":"GET","headers":"Accept: application\/json\" -H \"Content-Type: application\/json","body":""}]'
       aggregateResp: False
   routes:
   - name: route-42
