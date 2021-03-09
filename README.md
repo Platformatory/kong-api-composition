@@ -10,16 +10,23 @@ The API gateway can function as a declarative composition engine enabling gatewa
 
 The URIs are digested into the Kong lifecycle handler with composition performed in the access phase handler.
 
+# Installation and Getting Started
+
+For usage of the plugin, you can install this via Luarocks: luarocks install kong-api-composition (NOTE: This will work after we have a v1.0 tag. Presently, it isn't published yet);
+
+For development and testing purposes, you can git clone this repository and run ``` pongo run ``` to run tests or ```docker-compose up``` to spin up a self contained development environment.
+
 # Usage
 
-1. Configure a service and a route for the plugin: See declarative config in kong.yml (/route/42)
+1. Configure a service and a route for the plugin: See declarative config in kong.yml for reference. You can also create this via Admin APIs. Check Kong docs for reference.
+ 
 2. An array of Destinations is accepted in the following format
 
-```
-uri: <some uri>
-method: <any HTTP verb>
-headers: Array of headers as strings in the format "key: value"
-```
+| Parameter | Default  | Required | description |
+| --------- | -------- | -------- | ----------- |
+| config.destinations[] | | Yes | Array of destination inputs. Each takes the following parameters: URI, Method, Headers (key:value pairs) and Body (string) |
+| Flattened | False | No | If enabled, flattens the response to a single body merging all response bodies instead of a collection of response headers and bodies |
+| Separator | "|" | No | If Flattened = True, Then this separator is used to delimit multiple response bodies |
 
 For diagnostic tests, run ./run_tests.sh. With flattened: True,
 
