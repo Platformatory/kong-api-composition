@@ -1,6 +1,6 @@
 # Overview
 
-This plugin takes an array of HTTP request descriptions and provides a composite response containing a collection of individual responses. It can optionally flatten ("aggregate") response bodies to a single concatenated body with an chosen separator.
+This plugin takes an array of HTTP request descriptions and provides a composite response containing a collection of individual responses. It can optionally flatten ("aggregate") response bodies to a single concatenated body with a configurable separator.
 
 # Use-cases
 
@@ -12,7 +12,7 @@ The URIs are digested into the Kong lifecycle handler with composition performed
 
 # Installation and Getting Started
 
-For usage of the plugin, you can install this via Luarocks: luarocks install kong-api-composition (NOTE: This will work after we have a v1.0 tag. Presently, it isn't published yet);
+To use this plugin, you can install it via Luarocks: ``` luarocks install kong-api-composition ```
 
 For development and testing purposes, you can git clone this repository and run ``` pongo run ``` to run tests or ```docker-compose up``` to spin up a self contained development environment.
 
@@ -20,7 +20,7 @@ For development and testing purposes, you can git clone this repository and run 
 
 1. Configure a service and a route for the plugin: See declarative config in kong.yml for reference. You can also create this via Admin APIs. Check Kong docs for reference.
  
-2. An array of Destinations is accepted in the following format
+2. The Plugin accepts the following configurations:
 
 | Parameter | Default  | Required | description |
 | --------- | -------- | -------- | ----------- |
@@ -114,9 +114,6 @@ With flattened: False,
 ```
 
 
-4. Set HTTP client options (TODO: Under progress)
-
-
 # Known issues, Suggested Improvements & TODOs
 
 1. Named option configurations for the HTTP client - such as keepalives, timeouts, SSL/TLS settings etc. This plugin uses Resty.HTTP. We can improve the options object to consume a named list of configuration flags that can be passed on to resty under the hood.
@@ -124,7 +121,4 @@ With flattened: False,
 2. HTTP requests can be pipelined on an existing connection if sources are on the same host. See Resty request_pipeline. We can also explore potentially light threads (ngx.thread.spawn)
 
 3. Aggregation is presently not "Accept" aware (both on the proxy side and the upstream source side): It naively sends JSON encoded responses.
-  a. Need to flush out caveats around aggregation. Presently it is based on string concat with a configurable separator. For clarity, we refer to this as the flatten flag
-
-4. Pongo tests and Lurarocks distribution (TBD)
-
+  a. Need to flush out caveats around aggregation. Presently it is based on string concat with a configurable separator. For clarity, we refer to this as the "flatten" flag

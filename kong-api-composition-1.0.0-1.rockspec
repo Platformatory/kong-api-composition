@@ -5,7 +5,7 @@ version = "1.0.0-1"
 supported_platforms = {"linux"}
 
 source = {
-  url = "git@github.com:Platformatory/kong-api-composition.git",
+  url = "https://github.com/Platformatory/kong-api-composition.git",
   tag = "1.0.0"
 }
 
