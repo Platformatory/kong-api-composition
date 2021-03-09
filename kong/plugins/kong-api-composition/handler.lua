@@ -12,7 +12,6 @@ end
 function ApiComposition:access(config)
     ApiComposition.super.access(self) 
 
---  destinations from the plugin conf json string
     local reqs = config.destinations
   
 --  Collect all responses into this table by default
