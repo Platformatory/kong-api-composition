@@ -19,6 +19,21 @@ services:
         -
           uri: "http://httpbin.org/user-agent"
           method: "GET"
+       
+        -
+          uri: "http://httpbin.org/post"
+          method: "POST"
+          headers:
+            - "Accept: application/json"
+          body: "{foo: bar}"
+     
+        - 
+          uri: "http://httpbin.org/put"
+          method: "PUT"
+          headers:
+            - "Accept: application/json"
+          body: "{bar: baz}"
+
       flattened: False
   routes:
   - name: route-42
