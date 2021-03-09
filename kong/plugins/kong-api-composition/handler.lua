@@ -30,9 +30,9 @@ function ApiComposition:access(config)
 
       if config.flattened then
         if not res then
-          responses.body = responses.body .. "error:" .. err
+          responses.body = responses.body .. config.separator .. "error:" .. err
         else
-          responses.body = responses.body .. res.body
+          responses.body = responses.body .. config.separator .. res.body
         end
       else
         local result = { uri = v.uri}
